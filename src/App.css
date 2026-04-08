@@ -1,0 +1,527 @@
+.app-shell {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.aurora {
+  position: fixed;
+  z-index: -1;
+  border-radius: 999px;
+  filter: blur(20px);
+  pointer-events: none;
+  animation: drift 14s ease-in-out infinite alternate;
+}
+
+.aurora-one {
+  width: 36rem;
+  height: 36rem;
+  top: -10rem;
+  right: -8rem;
+  background: radial-gradient(circle, rgba(43, 198, 184, 0.4), rgba(43, 198, 184, 0));
+}
+
+.aurora-two {
+  width: 34rem;
+  height: 34rem;
+  left: -12rem;
+  bottom: -14rem;
+  background: radial-gradient(circle, rgba(255, 133, 94, 0.34), rgba(255, 133, 94, 0));
+  animation-duration: 18s;
+}
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  width: min(1140px, 94vw);
+  margin: 1rem auto 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(16, 53, 73, 0.2);
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(248, 252, 255, 0.84), rgba(242, 249, 255, 0.8));
+  backdrop-filter: blur(10px);
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 1rem;
+}
+
+.brand-wrap p {
+  margin: 0.2rem 0 0;
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #486273;
+}
+
+.brand {
+  text-decoration: none;
+  font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #102f43;
+}
+
+.nav-links {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.3rem;
+  border-radius: 999px;
+  background: rgba(16, 47, 67, 0.07);
+}
+
+.nav-links a {
+  text-decoration: none;
+  padding: 0.44rem 0.86rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  color: #25475c;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.nav-links a.active,
+.nav-links a:hover {
+  color: #ffffff;
+  background: #103549;
+}
+
+.cart-pill {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.36rem 0.44rem 0.36rem 0.8rem;
+  border-radius: 999px;
+  color: #103549;
+  background: linear-gradient(160deg, #d7fff9, #caf4ff);
+  border: 1px solid rgba(16, 53, 73, 0.16);
+}
+
+.cart-pill span {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.cart-pill strong {
+  display: inline-grid;
+  place-items: center;
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 50%;
+  background: #103549;
+  color: #ffffff;
+  font-size: 0.82rem;
+}
+
+.page-content {
+  width: min(1140px, 94vw);
+  margin: 1.1rem auto 1.4rem;
+}
+
+.product-list,
+.product-detail,
+.cart-view,
+.checkout-view {
+  animation: reveal 0.55s ease;
+}
+
+.list-hero {
+  position: relative;
+  margin-bottom: 1.2rem;
+  border: 1px solid rgba(18, 56, 77, 0.14);
+  border-radius: 26px;
+  padding: 2rem;
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.72), rgba(244, 252, 255, 0.86)),
+    repeating-linear-gradient(
+      45deg,
+      rgba(27, 95, 120, 0.04),
+      rgba(27, 95, 120, 0.04) 10px,
+      rgba(255, 255, 255, 0.05) 10px,
+      rgba(255, 255, 255, 0.05) 20px
+    );
+}
+
+.eyebrow {
+  display: inline-flex;
+  margin: 0;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(16, 53, 73, 0.1);
+  color: #13445e;
+  font-size: 0.72rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.list-hero h1 {
+  margin: 0.8rem 0;
+  max-width: 16ch;
+  font-size: clamp(1.8rem, 3.1vw, 3rem);
+  font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+  line-height: 1.05;
+  color: #102f43;
+}
+
+.list-hero > p:last-child {
+  max-width: 54ch;
+  margin: 0;
+  color: #476374;
+}
+
+.spotlight-card {
+  display: grid;
+  grid-template-columns: minmax(240px, 360px) 1fr;
+  gap: 1.2rem;
+  padding: 1rem;
+  border: 1px solid rgba(18, 56, 77, 0.14);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.74);
+  backdrop-filter: blur(4px);
+}
+
+.spotlight-card img {
+  width: 100%;
+  height: 260px;
+  object-fit: contain;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #f7fcff, #e9f6fd);
+}
+
+.spotlight-card h2 {
+  margin: 0.8rem 0;
+  font-size: clamp(1.35rem, 2.2vw, 1.9rem);
+  color: #0f3145;
+}
+
+.grid-heading {
+  margin: 1.4rem 0 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.grid-heading h2 {
+  margin: 0;
+  font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+  color: #0f3145;
+}
+
+.grid-heading p {
+  margin: 0;
+  color: #4c6778;
+  font-size: 0.92rem;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.product-card {
+  padding: 0.82rem;
+  border-radius: 16px;
+  border: 1px solid rgba(16, 53, 73, 0.14);
+  background: rgba(255, 255, 255, 0.76);
+  display: flex;
+  flex-direction: column;
+  gap: 0.66rem;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-4px) rotate(-0.4deg);
+  box-shadow: 0 20px 36px -28px rgba(16, 53, 73, 0.62);
+}
+
+.product-card img {
+  width: 100%;
+  height: 170px;
+  object-fit: contain;
+}
+
+.product-card h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: #18394d;
+  line-height: 1.32;
+}
+
+.price {
+  margin: 0;
+  font-weight: 700;
+  color: #0e5a43;
+}
+
+.button-link,
+button,
+.link-button {
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.92rem;
+  font-weight: 700;
+  padding: 0.56rem 0.9rem;
+}
+
+.button-link,
+button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: #ffffff;
+  background: linear-gradient(135deg, #f07f42, #f35f64);
+  box-shadow: 0 16px 32px -24px rgba(241, 113, 77, 0.86);
+}
+
+.button-link.secondary {
+  color: #103549;
+  background: #eff8fd;
+  border: 1px solid #bfdde9;
+  box-shadow: none;
+}
+
+.status-message {
+  text-align: center;
+  font-weight: 700;
+  color: #27495f;
+}
+
+.status-message.error {
+  color: #9d1e37;
+}
+
+.product-detail,
+.cart-view,
+.checkout-view {
+  border-radius: 22px;
+  border: 1px solid rgba(16, 53, 73, 0.14);
+  background: rgba(255, 255, 255, 0.8);
+  padding: 1.1rem;
+}
+
+.product-detail {
+  display: grid;
+  grid-template-columns: minmax(240px, 360px) 1fr;
+  gap: 1.3rem;
+}
+
+.product-detail img {
+  width: 100%;
+  height: 360px;
+  object-fit: contain;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #f7fcff, #ebf7fd);
+}
+
+.product-detail h1,
+.cart-view h1,
+.checkout-view h1 {
+  margin: 0.6rem 0 1rem;
+  color: #102f43;
+  font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+}
+
+.description {
+  color: #4b6577;
+  line-height: 1.62;
+}
+
+.detail-actions {
+  display: flex;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.cart-list {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.cart-row {
+  display: grid;
+  grid-template-columns: 76px 1fr auto auto;
+  gap: 0.9rem;
+  align-items: center;
+  border: 1px solid rgba(16, 53, 73, 0.11);
+  border-radius: 14px;
+  padding: 0.75rem;
+  background: rgba(247, 252, 255, 0.72);
+}
+
+.cart-row img {
+  width: 76px;
+  height: 76px;
+  object-fit: contain;
+}
+
+.cart-copy h2 {
+  margin: 0 0 0.25rem;
+  color: #12364a;
+  font-size: 1rem;
+}
+
+.cart-copy p {
+  margin: 0;
+  color: #476474;
+}
+
+.qty-wrap {
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  color: #385468;
+}
+
+.qty-wrap input,
+.checkout-form input,
+.checkout-form textarea {
+  border: 1px solid #b8d5e3;
+  border-radius: 10px;
+  padding: 0.52rem;
+  font: inherit;
+}
+
+.link-button {
+  color: #91243c;
+  background: #ffe9ef;
+}
+
+.cart-footer {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed rgba(16, 53, 73, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart-footer p {
+  margin: 0;
+  color: #12364a;
+  font-size: 1.12rem;
+  font-weight: 700;
+}
+
+.checkout-layout {
+  display: grid;
+  grid-template-columns: 1.8fr 1fr;
+  gap: 1rem;
+}
+
+.checkout-form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.checkout-form label {
+  display: grid;
+  gap: 0.3rem;
+  color: #2f4e60;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.order-summary {
+  border: 1px solid rgba(16, 53, 73, 0.14);
+  border-radius: 14px;
+  padding: 0.85rem;
+  background: rgba(240, 250, 255, 0.86);
+}
+
+.order-summary h2 {
+  margin-top: 0;
+  font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+  color: #12384e;
+}
+
+.order-summary ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.order-summary li {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+  color: #2f4e60;
+}
+
+.order-summary p {
+  margin: 0.9rem 0 0;
+  font-weight: 700;
+  color: #103549;
+}
+
+.app-footer {
+  width: min(1140px, 94vw);
+  margin: auto auto 1.2rem;
+  padding: 0.82rem 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(16, 53, 73, 0.15);
+  background: rgba(250, 253, 255, 0.78);
+}
+
+.app-footer p {
+  margin: 0;
+  text-align: center;
+  color: #476375;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+@keyframes drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  to {
+    transform: translate3d(24px, -26px, 0) scale(1.08);
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 920px) {
+  .app-header {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .product-detail,
+  .spotlight-card,
+  .checkout-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .cart-row {
+    grid-template-columns: 76px 1fr;
+  }
+
+  .cart-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.7rem;
+  }
+}
