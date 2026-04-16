@@ -1,0 +1,218 @@
+MERN Practical – Authentication & Testing
+1. Objective
+To build a backend system using Node.js with:
+• JWT Authentication
+• Image Upload
+• Mock Payment API
+• API Testing using Postman
+2. Features Covered
+• JWT Authentication
+• Password hashing
+• Protected routes
+• Image upload (Multer)
+• Mock payment API
+• Validation
+3. Project Structure
+
+project/
+│── models/
+│── routes/
+│── middleware/
+│── uploads/
+│── server.js
+│── .env
+
+4. Installation
+
+npm init -y
+npm install express mongoose dotenv jsonwebtoken
+bcryptjs multer cors express-validator
+
+5. Environment Setup
+
+PORT=5000
+MONGO_URI=mongodb://127.0.0.1:27017/mern_practical
+JWT_SECRET=mysecretkey
+
+Steps for practical
+
+STEP 1: Basic Server
+Create server.js
+
+const express = require("express");
+const app = express();
+app.use(express.json());
+app.get("/", (req, res) => {
+res.send("API Running");
+});
+app.listen(5000, () => console.log("Server started"));
+👉 Run:
+
+node server.js
+✔ Show in browser → API Running
+🗄 STEP 2: Connect Database
+Install MongoDB & run it.
+Update server.js:
+
+const mongoose = require("mongoose");
+mongoose.connect("mongodb://127.0.0.1:27017/
+mern_practical")
+.then(() => console.log("MongoDB Connected"))
+.catch(err => console.log(err));
+•
+📁 STEP 3: Folder Structure
+Create:
+
+models
+routes
+middleware
+uploads
+
+👤 STEP 4: User Model
+Create models/User.js
+
+const mongoose = require("mongoose");
+const userSchema = new mongoose.Schema({
+email: String,
+password: String
+});
+module.exports = mongoose.model("User", userSchema);
+
+🔐 STEP 5: Register API
+
+Create routes/authRoutes.js
+
+const express = require("express");
+const router = express.Router();
+const User = require("../models/User");
+const bcrypt = require("bcryptjs");
+// Register
+router.post("/register", async (req, res) => {
+const { email, password } = req.body;
+const hashed = await bcrypt.hash(password, 10);
+const user = new User({ email, password: hashed });
+await user.save();
+res.send("User Registered");
+});
+module.exports = router;
+
+Connect Route in server.js
+
+app.use("/api/auth", require("./routes/authRoutes"));
+
+🧪 TEST in Postman
+POST /api/auth/register
+
+{
+"email": "test@gmail.com",
+"password": "123456"
+}
+
+🔑 STEP 6: Login API (JWT)
+Update authRoutes.js
+
+const jwt = require("jsonwebtoken");
+// Login
+router.post("/login", async (req, res) => {
+const { email, password } = req.body;
+const user = await User.findOne({ email });
+if (!user) return res.send("User not found");
+const isMatch = await bcrypt.compare(password,
+user.password);
+if (!isMatch) return res.send("Wrong password");
+const token = jwt.sign({ id: user._id },
+"secretkey");
+res.json({ token });
+});
+
+👉 Explain in class:
+• Token = identity proof
+🛡 STEP 7: Middleware (Protect Routes)
+Create middleware/authMiddleware.js
+
+const jwt = require("jsonwebtoken");
+module.exports = (req, res, next) => {
+const token = req.header("Authorization");
+
+if (!token) return res.status(401).send("No token");
+try {
+const verified = jwt.verify(token, "secretkey");
+req.user = verified;
+next();
+} catch {
+res.status(400).send("Invalid token");
+}
+};
+
+🛍 STEP 8: Product API
+Create models/Product.js
+
+const mongoose = require("mongoose");
+const productSchema = new mongoose.Schema({
+name: String,
+price: Number,
+image: String
+});
+module.exports = mongoose.model("Product",
+productSchema);
+
+🖼 STEP 9: Image Upload (Multer)
+Create routes/productRoutes.js
+
+const express = require("express");
+const router = express.Router();
+const Product = require("../models/Product");
+const auth = require("../middleware/authMiddleware");
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+destination: "uploads/",
+filename: (req, file, cb) => {
+cb(null, Date.now() + file.originalname);
+}
+});
+const upload = multer({ storage });
+// Add product
+router.post("/", auth, upload.single("image"), async
+(req, res) => {
+const product = new Product({
+name: req.body.name,
+price: req.body.price,
+image: req.file.path
+});
+await product.save();
+res.send(product);
+});
+// Get products
+router.get("/", async (req, res) => {
+const products = await Product.find();
+res.json(products);
+});
+module.exports = router;
+
+Connect in server.js
+
+app.use("/api/products", require("./routes/
+productRoutes"));
+app.use("/uploads", express.static("uploads"));
+
+💳 STEP 10: Payment API
+Add in server.js
+
+app.post("/api/payment", (req, res) => {
+const { amount } = req.body;
+if (amount > 0) {
+res.json({ status: "success" });
+} else {
+res.status(400).json({ status: "failed" });
+}
+});
+
+🧪 F I N A L T E S T F L O W ( V E RY
+IMPORTANT)
+Use Postman:
+1. Register
+2. Login → copy token
+3. Add product (use token)
+4. Get products
+5. Payment

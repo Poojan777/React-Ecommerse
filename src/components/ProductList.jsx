@@ -10,9 +10,16 @@ function ProductList() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await apiClient.get('/products')
-        setProducts(response.data)
-      } catch {
+        const response = await apiClient.get('/api/products')
+        // Transform MongoDB response to match expected format
+        const transformedProducts = response.data.map((product) => ({
+          ...product,
+          id: product._id,
+          title: product.name,
+        }))
+        setProducts(transformedProducts)
+      } catch (err) {
+        console.error('Error fetching products:', err)
         setError('Unable to load products right now. Please retry.')
       } finally {
         setLoading(false)

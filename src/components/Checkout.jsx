@@ -1,15 +1,37 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import apiClient from '../api/client'
 import { useCart } from '../context/CartContext'
 
 function Checkout() {
   const { cartItems, cartTotal, clearCart } = useCart()
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isProcessing, setIsProcessing] = useState(false)
+  const [error, setError] = useState('')
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
-    setIsSubmitted(true)
-    clearCart()
+    setIsProcessing(true)
+    setError('')
+
+    try {
+      // Process payment via backend
+      const response = await apiClient.post('/api/payment', {
+        amount: cartTotal,
+      })
+
+      if (response.data.status === 'success') {
+        setIsSubmitted(true)
+        clearCart()
+      } else {
+        setError('Payment failed. Please try again.')
+      }
+    } catch (err) {
+      console.error('Payment error:', err)
+      setError('Payment processing failed. Please try again.')
+    } finally {
+      setIsProcessing(false)
+    }
   }
 
   if (isSubmitted) {
@@ -53,7 +75,10 @@ function Checkout() {
             Address
             <textarea rows="4" required />
           </label>
-          <button type="submit">Place order</button>
+          {error && <p className="error-message">{error}</p>}
+          <button type="submit" disabled={isProcessing}>
+            {isProcessing ? 'Processing...' : 'Place order'}
+          </button>
         </form>
 
         <aside className="order-summary">

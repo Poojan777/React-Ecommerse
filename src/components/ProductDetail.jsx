@@ -13,9 +13,24 @@ function ProductDetail() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await apiClient.get(`/products/${productId}`)
-        setProduct(response.data)
-      } catch {
+        const response = await apiClient.get('/api/products')
+        // Find product by ID
+        const foundProduct = response.data.find((p) => p._id === productId)
+        
+        if (foundProduct) {
+          // Transform MongoDB response to match expected format
+          setProduct({
+            ...foundProduct,
+            id: foundProduct._id,
+            title: foundProduct.name,
+            category: 'Product',
+            description: `${foundProduct.name} - Premium quality item`,
+          })
+        } else {
+          setError('Product not found.')
+        }
+      } catch (err) {
+        console.error('Error fetching product:', err)
         setError('Product details could not be loaded.')
       } finally {
         setLoading(false)
